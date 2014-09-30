@@ -1,0 +1,54 @@
+﻿@model MvcAppLivraria.Models.LoginModel
+
+@{
+    ViewBag.Title = "Log in";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+<div class="row text-center">
+     <div class="col-md-6 col-sm-6">
+        <section id="loginForm">
+        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <legend>Create a new account.</legend>   
+                <div class="input-group">
+                    <span class="input-group-addon">@@</span>
+                    @Html.TextBoxFor(m => m.UserName, new { placeholder="Email", @class="form-control" })            
+                </div> 
+                @Html.ValidationMessageFor(m => m.UserName)               
+                <br />
+                <div class="input-group">
+                    <span class="input-group-addon">***</span>
+                    @Html.PasswordFor(m => m.Password, new { placeholder="Senha", @class="form-control" })            
+                </div>
+                @Html.ValidationMessageFor(m => m.Password)
+                <br />
+                <div class="btn-group pull-right">
+                  <div class="btn btn-default" style="height:40px;">
+                     @Html.CheckBoxFor(m => m.RememberMe) Lembrar-me?
+                  </div>
+                  <button type="submit" class="btn btn-primary">Log in</button>
+                </div>
+            </fieldset>
+            <p>
+                @Html.ActionLink("Register", "Register") if you don't have an account.
+            </p>
+        }
+        </section>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <section class="social" id="socialLoginForm">
+            <h2>Use another service to log in.</h2>
+            @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
